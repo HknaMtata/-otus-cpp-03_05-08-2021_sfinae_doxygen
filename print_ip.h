@@ -46,12 +46,20 @@ std::enable_if_t<
     void
 > print(T&& val)
 {
-    std::array< std::remove_const_t< std::remove_reference_t<T> >, sizeof(val)> tmp;
-    for(std::size_t sz = 0; sz < sizeof(val); ++sz)
+    auto get_byte = [&val](const std::size_t& byte) {
+        return (val >> ((sizeof(val) - (byte + 1)) * 8)) & ((1 << 8) - 1);
+    };
+
+    std::size_t pos = 0;
+    std::cout << get_byte(pos);
+
+    ++pos;
+    for(; pos < sizeof(val); ++pos)
     {
-        tmp[sz] = ((val >> ((sizeof(val) - (sz + 1)) * 8)) & ((1 << 8) - 1));
+        std::cout << "." << get_byte(pos);
     }
-    print(tmp);
+
+    std::cout << std::endl;
 }
 
 template<typename T>

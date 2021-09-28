@@ -33,8 +33,6 @@ int main(int , char**)
         print(cstr);
         print(std::move(mstr));
 
-        // - Опционально. Печать адреса как std::tuple
-
     } catch(const std::exception& e) {
         std::cout << e.what() << '\n';
         return 1;
