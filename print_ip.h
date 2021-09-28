@@ -1,5 +1,6 @@
 #pragma once
 
+#include <array>
 #include <string>
 #include <sstream>
 
@@ -49,11 +50,10 @@ std::enable_if_t<
     std::string
 > print(T&& val)
 {
-    std::array<T, sizeof(val)> tmp;
-    constexpr std::remove_reference_t<T> mask = ~0;
-    for(std::size_t sz = sizeof(val); sz > 0; --sz)
+    std::array< std::remove_const_t< std::remove_reference_t<T> >, sizeof(val)> tmp;
+    for(std::size_t sz = 0; sz < sizeof(val); ++sz)
     {
-        tmp[sz]((val >> ((sz - 1) * 8)) & mask);
+        tmp[sz] = ((val >> ((sizeof(val) - (sz + 1)) * 8)) & ((1 << 8) - 1));
     }
     return print(tmp);
 }

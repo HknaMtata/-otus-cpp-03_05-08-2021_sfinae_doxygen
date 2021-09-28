@@ -22,7 +22,7 @@ int main(int , char**)
         std::cout << print(978) << std::endl;
         std::cout << print(std::move(978)) << std::endl;
         
-        short short_integer{6};
+        short short_integer{300};
         std::cout << print(short_integer) << std::endl;
 
         long long_integer{298323};
