@@ -4,6 +4,7 @@
 #include <string>
 #include <iostream>
 
+/// Type trait. Check if type is iterable
 template <typename T, typename = void>
 struct is_iterable : std::false_type {};
 
@@ -15,6 +16,7 @@ struct is_iterable<T,
     >
 > : std::true_type {};
 
+/// Very important print function. Implementented with SFINAE idiom
 template<typename T>
 std::enable_if_t<
     is_iterable<
