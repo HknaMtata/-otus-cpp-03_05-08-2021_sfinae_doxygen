@@ -41,9 +41,10 @@ jobs:
         working-directory: ./
         run: mkdir public
       - uses: mattnotmitt/doxygen-action@v1
-        working-directory: ./public
-        doxyfile-path: ../Doxyfile
+        with:
+          working-directory: ./public
+          doxyfile-path: ../Doxyfile
       - uses: peaceiris/actions-gh-pages@v3
         with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}
-        publish_dir: ./public
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./public
