@@ -7,49 +7,34 @@
 int main(int , char**)
 {
     try {
-        // std::cout << print<char>(-1) << std::endl;
-        // std::cout << print<short>(0) << std::endl;
-        // std::cout << print<int>(2130706433) << std::endl;
-        // std::cout << print<long>(8875824491850138409) << std::endl;
-        int integer = 134556;
-        int* pinteger = &integer;
-        const int cinteger = 567488;
-        const int* cpinteger = &cinteger;
-        std::cout << print(integer) << std::endl;
-        std::cout << print(pinteger) << std::endl;
-        std::cout << print(cinteger) << std::endl;
-        std::cout << print(cpinteger) << std::endl;
-        std::cout << print(978) << std::endl;
-        std::cout << print(std::move(978)) << std::endl;
-        
-        short short_integer{300};
-        std::cout << print(short_integer) << std::endl;
-
-        long long_integer{298323};
-        std::cout << print(long_integer) << std::endl;
-    
-        // char char_integer{-1};
-        // std::cout << print(char_integer) << std::endl;
-
-        std::string str = "trololo";
-        const std::string cstr = "trololo";
-        std::string tmpstr = "trololo";
-        std::cout << print(str) << std::endl;
-        std::cout << print(cstr) << std::endl;
-        std::cout << print(std::move(tmpstr)) << std::endl;
-        // std::cout << print("trololo") << std::endl;
+        print<char>(-1);
+        print<short>(0);
+        print<int>(2130706433);
+        print<long>(8875824491850138409);
+        print("trololo");
 
         std::vector<int> vv{10,11,12,13,14};
-        std::cout << print(vv) << std::endl;
+        print(vv);
 
-        std::list<short> ll{5,6,7,8,9};
-        std::cout << print(ll) << std::endl;
+        std::list<long> ll{2130706,2135436,25635436,34343434,23234356};
+        print(ll);
 
-        std::array<int, 1> aa{576};
-        std::cout << print(aa) << std::endl;
+        int integer = 134556;
+        const int cinteger = 567488;
+        print(integer);
+        // print(&integer); // compile error
+        print(cinteger);
+        print(std::move(978));
 
-        // std::cout << print<std::list<short>>({1, 4, 8, 10, 3, 6}) << std::endl;
+        std::string str = "std::string";
+        const std::string cstr = "const std::string";
+        std::string mstr = "moved std::string";
+        print(str);
+        print(cstr);
+        print(std::move(mstr));
+
         // - Опционально. Печать адреса как std::tuple
+
     } catch(const std::exception& e) {
         std::cout << e.what() << '\n';
         return 1;
