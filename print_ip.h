@@ -3,27 +3,14 @@
 #include <array>
 #include <string>
 #include <iostream>
+#include <list>
+#include <vector>
 
-template <typename T, typename = void>
-struct is_iterable : std::false_type {};
-
-template <typename T>
-struct is_iterable<T,
-    std::void_t<
-        decltype(std::declval<T>().begin()),
-        decltype(std::declval<T>().end())
-    >
-> : std::true_type {};
+namespace detail
+{
 
 template<typename T>
-std::enable_if_t<
-    is_iterable<
-        std::conditional_t<
-            std::is_constructible_v<std::string, T>, void, std::remove_const_t< std::remove_reference_t<T>>
-        >
-    >::value,
-    void
-> print(T&& container)
+void print_stl_container(const T container)
 {
     auto&& begin_it = container.begin();
     auto&& end_it = container.end();
@@ -36,6 +23,38 @@ std::enable_if_t<
         }
     }
     std::cout << std::endl;
+}
+
+}
+
+template<typename T>
+std::enable_if_t<
+    std::is_same_v<
+        std::vector<typename std::remove_const_t<std::remove_reference_t<T>>::value_type>,
+        typename std::remove_const_t<std::remove_reference_t<T>>
+    >
+> print(const T container)
+{
+    if constexpr (std::is_reference_v<std::remove_const_t<T>>) {
+        detail::print_stl_container(std::forward<T>(container));
+    } else {
+        detail::print_stl_container(container);
+    }
+}
+
+template<typename T>
+std::enable_if_t<
+    std::is_same_v<
+        std::list<typename std::remove_const_t<std::remove_reference_t<T>>::value_type>,
+        typename std::remove_const_t<std::remove_reference_t<T>>
+    >
+> print(T container)
+{
+    if constexpr (std::is_reference_v<std::remove_const_t<T>>) {
+        detail::print_stl_container(std::forward(container));
+    } else {
+        detail::print_stl_container(container);
+    }
 }
 
 template<typename T>
