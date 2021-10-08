@@ -10,7 +10,7 @@ namespace detail
 {
 
 template<typename T>
-void print_stl_container(const T container)
+void print_stl_container(T&& container)
 {
     auto&& begin_it = container.begin();
     auto&& end_it = container.end();
@@ -32,29 +32,14 @@ std::enable_if_t<
     std::is_same_v<
         std::vector<typename std::remove_const_t<std::remove_reference_t<T>>::value_type>,
         typename std::remove_const_t<std::remove_reference_t<T>>
-    >
-> print(const T container)
-{
-    if constexpr (std::is_reference_v<std::remove_const_t<T>>) {
-        detail::print_stl_container(std::forward<T>(container));
-    } else {
-        detail::print_stl_container(container);
-    }
-}
-
-template<typename T>
-std::enable_if_t<
+    > ||
     std::is_same_v<
         std::list<typename std::remove_const_t<std::remove_reference_t<T>>::value_type>,
         typename std::remove_const_t<std::remove_reference_t<T>>
     >
-> print(T container)
+> print(T&& container)
 {
-    if constexpr (std::is_reference_v<std::remove_const_t<T>>) {
-        detail::print_stl_container(std::forward(container));
-    } else {
-        detail::print_stl_container(container);
-    }
+    detail::print_stl_container(std::forward<T>(container));
 }
 
 template<typename T>

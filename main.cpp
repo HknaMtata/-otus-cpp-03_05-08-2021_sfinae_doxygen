@@ -15,6 +15,7 @@ int main(int , char**)
 
         std::vector<int> vv{10,11,12,13,14};
         print(vv);
+        // print<std::vector<int>>(vv);
 
         std::list<long> ll{2130706,2135436,25635436,34343434,23234356};
         print(ll);
